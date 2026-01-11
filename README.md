@@ -17,3 +17,7 @@ This repository contains various personal programming experiments and small proj
 - **godown** - Concurrent file downloader written in Go
 - **imgur-cli** - Simple CLI tool to upload files to Imgur anonymously
 - **procedural-map-generator** - Procedural map generation using noise
+
+## Note
+
+Some links might be broken, since the path has not been updated in all READMEs, also the go projects (godown & imgur-cli) may not work properly with `go get` since the paths have not been updated.
