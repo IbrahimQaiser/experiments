@@ -58,3 +58,10 @@ So think of a GraphQL query as a user supplied program, so it should be treated 
 - Fragments increase the amount of work required
 - Recursive graph walks are unbounded, so a recursion limit needs to be applied
 - Cost is not dependent upon the resource requested or the endpoint, it depends upon the shape of the query
+
+3. Database amplification can be prevented using `dataloader`, the library will batch calls to the database. The function must take a list of keys as argument, and it must return a list of the same size. If an error occurs while fetching a single key, it should return null / new Error instead.
+
+Now, Instead of ~3000 database hits, it's reduced to around 4 SQL queries.
+
+A new dataloader object must be created for every client so that cache is not accidently shared between different clients (unless it doesn't matter in that use case)
+

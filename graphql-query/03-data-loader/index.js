@@ -1,19 +1,11 @@
-// A simple graphql server example for a blog site with users, posts and comments
-// users(id, name)
-// posts(id, title, body, user_id)
-// comments(id, body, post_id, user_id)
-
-// TOOD: For now only query will be implemented, mutations will be implemented later
-
-// Program to demonstrate N+1 explosion when using GraphQL in a naive way
-
-// The goal of this small application is to find out how many SQL queries is executed, and the possible attacks on it
+// Program to demonstrate dataloader library for batching and caching
 
 import { graphql, GraphQLID, GraphQLList, GraphQLNonNull, GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
 import express from 'express'
-import sql, { getCommentsByPost, getCommentsByPostCalls, getPostsByUserId, getPostsByUserIdCalls, getUserById, getUserByIdCalls, getUsers, getUsersCalls } from "./db.js";
+import sql, { getCommentsByPostBatch, getCommentsByPostCalls, getPostsByUserIdBatch, getPostsByUserIdCalls, getUserByIdBatch, getUserByIdCalls, getUsers, getUsersCalls } from "./db.js";
 import { createHandler } from 'graphql-http/lib/use/express';
 import { ruruHTML } from "ruru/server";
+import DataLoader from "dataloader";
 
 console.log('connected to database')
 
@@ -33,10 +25,10 @@ const UserType = new GraphQLObjectType({
         name: { type: new GraphQLNonNull(GraphQLString) },
         posts: {
             type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(PostType))),
-            resolve: async (user) => {
+            resolve: async (user, _, context) => {
                 resolveCallCounts.posts++;
                 console.log('resolving posts for user', user.id, '(', user.name, ')')
-                return await getPostsByUserId(user.id)
+                return await context.loaders.getPostsByUserId.load(user.id)
             }
         }
     })
@@ -50,18 +42,18 @@ const PostType = new GraphQLObjectType({
         body: { type: new GraphQLNonNull(GraphQLString) },
         author: {
             type: new GraphQLNonNull(UserType),
-            resolve: async (post) => {
+            resolve: async (post, _, context) => {
                 resolveCallCounts.postAuthor++;
                 console.log('resolving author for post', post.id)
-                return await getUserById(post.user_id)
+                return await context.loaders.getUserById.load(post.user_id)
             }
         },
         comments: {
             type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(CommentType))),
-            resolve: async (post) => {
+            resolve: async (post, _, context) => {
                 resolveCallCounts.postComments++;
                 console.log('resolving comments for post', post.id)
-                return await getCommentsByPost(post.id)
+                return await context.loaders.getCommentsByPost.load(post.id)
             }
         }
     })
@@ -74,10 +66,10 @@ const CommentType = new GraphQLObjectType({
         body: { type: new GraphQLNonNull(GraphQLString) },
         author: {
             type: new GraphQLNonNull(UserType),
-            resolve: async (comment) => {
+            resolve: async (comment, _, context) => {
                 resolveCallCounts.commentAuthor++;
                 console.log('resolving author for comment', comment.id)
-                return await getUserById(comment.user_id)
+                return await context.loaders.getUserById.load(comment.user_id)
             }
         }
     }
@@ -92,7 +84,7 @@ const schema = new GraphQLSchema({
                 resolve: async () => {
                     resolveCallCounts.users++;
                     console.log('resolving all users')
-                    return await getUsers()
+                    return getUsers()
                 }
             }
         }
@@ -146,7 +138,14 @@ app.use(loggingMiddleware)
 app.all(
     '/graphql',
     createHandler({
-        schema: schema
+        schema: schema,
+        context: () => ({
+            loaders: {
+                getPostsByUserId: new DataLoader(getPostsByUserIdBatch),
+                getCommentsByPost: new DataLoader(getCommentsByPostBatch),
+                getUserById: new DataLoader(getUserByIdBatch),
+            }
+        })
     })
 )
 
@@ -181,4 +180,9 @@ fragment getPosts on User{
     }
 }
 }
+*/
+/*
+[2026-01-16T17:46:31.759Z] POST /graphql - IP: ::1 - Status: 200 - 133ms
+SQL Queries - Users: 1, Posts: 1, Comments: 1, User: 0, Total: 3
+Resolve calls - Users: 1, Posts: 10, PostAuthor: 0, PostComments: 1009, CommentAuthor: 0, Total: 1020
 */
