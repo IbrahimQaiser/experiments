@@ -85,3 +85,31 @@ Three types of timeout can be set:
 3) Query complexity analysis, since traditional rate limiting software does not work, the application has to implement heuristics to identify the cost with executing a query. If the cost of execution exceeds the set threshold, the query must be dropped. Traditional ratelimiting does not work since only a single query is sent, but that query can involve a lot of work.
 
 In the cost based solution, we set a cost per field, and then check the AST to find out the total cost for the query
+
+
+4) Persisted queries
+
+Instead of allowing the client to execute arbitrary queries, have a registry of queries (which are used by the frontend), then the API will accept this key (usually a SHA256 of the query), and then the backend will execute this query and return the result. This reduces a lot of attacks like DoS but the application is still vulnerable in case of internal query issues.
+
+Instead of manually setting up these persisted queries, when using a framework, the framework can automatically collect all graphql queries used, and set up a registry of allowed queries that are used in the frontend.
+
+
+5) When to use it ?
+
+Use GraphQL when there are a lot of ways to present data - i.e. a CLI, a mobile device, browser, desktop app etc, and it becomes cumbersome to develop multiple views of the same data.
+
+When you need to avoid underfetching / overfetching, this also occurs due to multiple views of the data
+
+When the UI or frontend changes frequently, this allows the client to adapt queries without changing the backend or API versioning
+
+Data aggregation from multiple sources - i.e. the data is not just from a single database, a graphql api can fetch data from various sources, aggregate them and return them as a single response to the client
+
+When you have multiple teams working, it allows for rapid development and iteration, it also solves the issues regarding naming of endpoints
+
+6) When not to use it
+
+For simple applications (CRUD), GraphQL is an overkill due to it's complexity
+
+Caching is hard and complex in graphql, so standard caching applications do not work, and it requires custom solutions and extra effort
+
+Frontend development becomes easier but backend development becomes harder, and it's difficult to figure out and fix security issues if you are not well versed in graphql - such as DoS attacks, traversal attacks, authorization attacks etc. I.e. more care must be taken when implementing the backend. Persisted queries help solve a lot of these kind of issues, but they are not infalliable if the query itself is written incorrectly.
