@@ -6,6 +6,9 @@ import sql, { getCommentsByPostBatch, getCommentsByPostCalls, getPostsByUserIdBa
 import { createHandler } from 'graphql-http/lib/use/express';
 import { ruruHTML } from "ruru/server";
 import DataLoader from "dataloader";
+import depthLimit from "graphql-depth-limit";
+
+const maxQueryDepth = 6
 
 console.log('connected to database')
 
@@ -139,6 +142,9 @@ app.all(
     '/graphql',
     createHandler({
         schema: schema,
+        validationRules: [
+            depthLimit(maxQueryDepth)
+        ],
         context: () => ({
             loaders: {
                 getPostsByUserId: new DataLoader(getPostsByUserIdBatch),
