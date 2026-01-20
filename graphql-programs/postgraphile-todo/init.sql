@@ -1,1 +1,25 @@
 CREATE SCHEMA IF NOT EXISTS app_public;
+
+SET search_path TO app_public, public;
+
+BEGIN;
+
+CREATE TABLE IF NOT EXISTS todo (
+    id BIGSERIAL PRIMARY KEY,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    is_completed BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS tag (
+    id BIGSERIAL PRIMARY KEY,
+    content TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS tag_todo ( 
+    tag_id BIGINT REFERENCES tag(id) ON DELETE CASCADE,
+    todo_id BIGINT REFERENCES todo(id) ON DELETE CASCADE,
+    CONSTRAINT Pk_tag_todo PRIMARY KEY (tag_id, todo_id)
+);
+COMMIT;

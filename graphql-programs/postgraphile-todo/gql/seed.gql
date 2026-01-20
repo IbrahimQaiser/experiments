@@ -1,0 +1,57 @@
+mutation SeedFull {
+  # --- TODOS ---
+  todo1: createTodo(input: { todo: { id: "1", title: "Buy groceries", description: "Milk, eggs, bread" } }) { clientMutationId }
+  todo2: createTodo(input: { todo: { id: "2", title: "Workout", description: "Leg day at the gym" } }) { clientMutationId }
+  todo3: createTodo(input: { todo: { id: "3", title: "Learn GraphQL", description: "Practice mutations and queries" } }) { clientMutationId }
+  todo4: createTodo(input: { todo: { id: "4", title: "Finish report", description: "Due tomorrow" } }) { clientMutationId }
+  todo5: createTodo(input: { todo: { id: "5", title: "Plan vacation", description: "Flights and hotels" } }) { clientMutationId }
+  todo6: createTodo(input: { todo: { id: "6", title: "Call mom", description: "Weekly check-in" } }) { clientMutationId }
+  todo7: createTodo(input: { todo: { id: "7", title: "Read a book", description: "Read 30 pages" } }) { clientMutationId }
+  todo8: createTodo(input: { todo: { id: "8", title: "Clean the house", description: "Living room and kitchen" } }) { clientMutationId }
+  todo9: createTodo(input: { todo: { id: "9", title: "Pay bills", description: "Electricity and internet" } }) { clientMutationId }
+  todo10: createTodo(input: { todo: { id: "10", title: "Write blog post", description: "Post about GraphQL best practices" } }) { clientMutationId }
+  todo11: createTodo(input: { todo: { id: "11", title: "Morning run", description: "5km around neighborhood" } }) { clientMutationId }
+  todo12: createTodo(input: { todo: { id: "12", title: "Refactor code", description: "Improve readability and tests" } }) { clientMutationId }
+  todo13: createTodo(input: { todo: { id: "13", title: "Prepare presentation", description: "Slides for Friday demo" } }) { clientMutationId }
+  todo14: createTodo(input: { todo: { id: "14", title: "Review PRs", description: "Check open pull requests" } }) { clientMutationId }
+  todo15: createTodo(input: { todo: { id: "15", title: "Organize desk", description: "Declutter workspace" } }) { clientMutationId }
+
+  # --- TAGS ---
+  tag1: createTag(input: { tag: { id: "101", content: "work" } }) { clientMutationId }
+  tag2: createTag(input: { tag: { id: "102", content: "personal" } }) { clientMutationId }
+  tag3: createTag(input: { tag: { id: "103", content: "urgent" } }) { clientMutationId }
+  tag4: createTag(input: { tag: { id: "104", content: "fitness" } }) { clientMutationId }
+  tag5: createTag(input: { tag: { id: "105", content: "learning" } }) { clientMutationId }
+  tag6: createTag(input: { tag: { id: "106", content: "finance" } }) { clientMutationId }
+  tag7: createTag(input: { tag: { id: "107", content: "health" } }) { clientMutationId }
+  tag8: createTag(input: { tag: { id: "108", content: "reading" } }) { clientMutationId }
+  tag9: createTag(input: { tag: { id: "109", content: "planning" } }) { clientMutationId }
+  tag10: createTag(input: { tag: { id: "110", content: "coding" } }) { clientMutationId }
+  tag11: createTag(input: { tag: { id: "111", content: "ideas" } }) { clientMutationId }
+  tag12: createTag(input: { tag: { id: "112", content: "meeting" } }) { clientMutationId }
+  tag13: createTag(input: { tag: { id: "113", content: "home" } }) { clientMutationId }
+  tag14: createTag(input: { tag: { id: "114", content: "travel" } }) { clientMutationId }
+  tag15: createTag(input: { tag: { id: "115", content: "hobby" } }) { clientMutationId }
+
+  # --- TAG ↔ TODO LINKS ---
+  link1: createTagTodo(input: { tagTodo: { tagId: "101", todoId: "1" } }) { clientMutationId } # work → Buy groceries
+  link2: createTagTodo(input: { tagTodo: { tagId: "103", todoId: "1" } }) { clientMutationId } # urgent → Buy groceries
+  link3: createTagTodo(input: { tagTodo: { tagId: "104", todoId: "2" } }) { clientMutationId } # fitness → Workout
+  link4: createTagTodo(input: { tagTodo: { tagId: "105", todoId: "3" } }) { clientMutationId } # learning → Learn GraphQL
+  link5: createTagTodo(input: { tagTodo: { tagId: "101", todoId: "4" } }) { clientMutationId } # work → Finish report
+  link6: createTagTodo(input: { tagTodo: { tagId: "103", todoId: "4" } }) { clientMutationId } # urgent → Finish report
+  link7: createTagTodo(input: { tagTodo: { tagId: "102", todoId: "5" } }) { clientMutationId } # personal → Plan vacation
+  link8: createTagTodo(input: { tagTodo: { tagId: "108", todoId: "7" } }) { clientMutationId } # reading → Read a book
+  link9: createTagTodo(input: { tagTodo: { tagId: "111", todoId: "10" } }) { clientMutationId } # ideas → Write blog post
+  link10: createTagTodo(input: { tagTodo: { tagId: "110", todoId: "12" } }) { clientMutationId } # coding → Refactor code
+  link11: createTagTodo(input: { tagTodo: { tagId: "109", todoId: "13" } }) { clientMutationId } # planning → Prepare presentation
+  link12: createTagTodo(input: { tagTodo: { tagId: "112", todoId: "14" } }) { clientMutationId } # meeting → Review PRs
+  link13: createTagTodo(input: { tagTodo: { tagId: "113", todoId: "8" } }) { clientMutationId } # home → Clean the house
+  link14: createTagTodo(input: { tagTodo: { tagId: "114", todoId: "5" } }) { clientMutationId } # travel → Plan vacation
+  link15: createTagTodo(input: { tagTodo: { tagId: "115", todoId: "11" } }) { clientMutationId } # hobby → Morning run
+  link16: createTagTodo(input: { tagTodo: { tagId: "107", todoId: "2" } }) { clientMutationId } # health → Workout
+  link17: createTagTodo(input: { tagTodo: { tagId: "106", todoId: "9" } }) { clientMutationId } # finance → Pay bills
+  link18: createTagTodo(input: { tagTodo: { tagId: "102", todoId: "6" } }) { clientMutationId } # personal → Call mom
+  link19: createTagTodo(input: { tagTodo: { tagId: "108", todoId: "12" } }) { clientMutationId } # reading → Refactor code
+  link20: createTagTodo(input: { tagTodo: { tagId: "110", todoId: "3" } }) { clientMutationId } # coding → Learn GraphQL
+}
