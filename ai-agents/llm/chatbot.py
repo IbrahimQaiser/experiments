@@ -62,6 +62,7 @@ while True:
         input=messages,
         max_output_tokens=2000,
         temperature=0.5,
+        store=False,
     )
     print(response.output_text)
     messages.append({"role": "assistant", "content": response.output_text})
