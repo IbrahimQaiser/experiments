@@ -53,7 +53,7 @@ def run(planner: Planner, executor: Executor, task: str):
     print(f"=== Execution ===")
     for i, step in enumerate(plan.steps):
         print(f"== Step {i + 1} ==")
-        print(f"Step: {step}\n")
+        print(f"Step: {step}")
         turns = 0
         step_memory: List[ResponseInputItemParam] = []
         while True:
@@ -95,10 +95,13 @@ def run(planner: Planner, executor: Executor, task: str):
                     }
                     tool_outputs.append(function_call_output)
                 step_memory.extend(tool_outputs)
+                #print("###", step_memory)
             elif isinstance(result, ExecutionResult):
+                #print("***", step_memory)
                 print(f"=== Result of step {i+1} ===")
                 print(f"Result: {result.result}")
                 print(f"Observation: {result.observation}")
+                print()
                 break
 
     print_tokens_used(planner, executor)

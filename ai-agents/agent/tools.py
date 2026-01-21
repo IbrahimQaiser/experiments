@@ -5,7 +5,13 @@ tools: List[ParseableToolParam] = [
     {
         "type": "function",
         "name": "calculate",
-        "description": "Computes the result of a mathematical expression. The expression will be passed to python eval() function, so make sure that the expression is formatted using python syntax",
+        "description": (
+            "Computes the result of a mathematical expression. "
+            "The expression will be passed to python eval(). "
+            "IMPORTANT: The model must return the argument as valid JSON. "
+            "Escape quotes and special characters. Do not return raw Python objects."
+            "Available modules - math, numpy as np"
+        ),
         "parameters": {
             "type": "object",
             "properties": {
@@ -21,16 +27,19 @@ tools: List[ParseableToolParam] = [
     }
 ]
 
+import math
+import numpy as np
+
 
 def calculate(obj: dict[str, str]) -> str:
     if obj.get("expression") is None:
         return f"Error: key 'expression' not present in argument"
     # TODO: UNSAFE
     try:
-        result = eval(obj["expression"])
-        return str(result)
+        result = str(eval(obj["expression"]))
+        return result
     except Exception as e:
-        return f"Error: {e}"
+        return f"Error while invoking tool"
 
 
 functions_list: dict[str, Callable[..., Any]] = {"calculate": calculate}
